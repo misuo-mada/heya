@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 // CORSの設定（ローカル開発用）
 const cors = require('cors');
 app.use(cors());
