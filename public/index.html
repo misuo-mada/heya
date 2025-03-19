@@ -101,7 +101,7 @@
 
         // 証拠詳細をサーバーから取得
         function fetchEvidence(id) {
-            fetch(`http://localhost:3000/api/evidence/${id}`)
+          fetch(`/api/evidence/${id}`)
                 .then(response => response.json())
                 .then(data => {
                     document.getElementById('evidence-img').src = data.img;
