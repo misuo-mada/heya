@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>あなたの部屋</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            background: black;
+            color: white;
+        }
+
+        .container {
+            position: relative;
+            width: 800px;
+            height: 500px;
+            margin: 20px auto;
+            background: url('heya.jpg') no-repeat center center;
+            background-size: contain;
+        }
+
+        .evidence {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: red;
+            border-radius: 50%;
+            opacity: 0.7;
+            cursor: pointer;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: rgb(68, 27, 27);
+            padding: 20px;
+            width: 30%;
+            text-align: center;
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .modal img {
+            max-width: 40%;
+            height: auto;
+            border: 2px solid #000;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: red;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>あなたの部屋</h1>
+
+    <div class="container">
+        <div class="evidence" data-id="1" style="top: 100px; left: 200px;"></div>
+        <div class="evidence" data-id="2" style="top: 250px; left: 500px;"></div>
+    </div>
+
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal()">×</button>
+            <img id="evidence-img" src="" alt="証拠">
+            <p id="evidence-desc"></p>
+        </div>
+    </div>
+
+    <script>
+        // 証拠をクリックしたとき
+        document.querySelectorAll('.evidence').forEach(item => {
+            item.addEventListener('click', function() {
+                const id = this.getAttribute('data-id');
+                fetchEvidence(id);
+            });
+        });
+
+        // 証拠詳細をサーバーから取得
+        function fetchEvidence(id) {
+            fetch(`http://localhost:3000/api/evidence/${id}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('evidence-img').src = data.img;
+                    document.getElementById('evidence-desc').textContent = data.desc;
+                    document.getElementById('modal').style.display = 'flex';
+                })
+                .catch(error => console.error("エラー:", error));
+        }
+
+        // モーダルを閉じる
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+    </script>
+
+</body>
+</html>
