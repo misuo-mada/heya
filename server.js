@@ -31,6 +31,6 @@ app.get('/api/evidence/:id', (req, res) => {
 });
 
 // サーバー起動
-app.listen(port, () => {
+app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
 });
