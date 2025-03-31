@@ -3,22 +3,11 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 // CORSの設定（ローカル開発用）
 const cors = require('cors');
+const { evidenceData } = require('./evidenceData');
 app.use(cors());
 
 // 静的ファイルの提供（フロントエンド用）
 app.use(express.static('public'));
-
-// 証拠データ (サーバー側で管理)
-const evidenceData = {
-    1: {
-        img: "jaket.jpg",
-        desc: "血痕が床に付着している。"
-    },
-    2: {
-        img: "key.jpg",
-        desc: "破れた手紙が落ちている。"
-    }
-};
 
 // 証拠データのAPIエンドポイント
 app.get('/api/evidence/:id', (req, res) => {
